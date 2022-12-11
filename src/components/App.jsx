@@ -17,9 +17,14 @@ export class App extends Component {
 
   formSubmitHandler = data => {
     const newContact = { id: nanoid(), ...data };
-    this.setState(prevState => ({
-      contacts: [newContact, ...prevState.contacts],
-    }));
+
+    this.state.contacts.find(
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
+    )
+      ? alert(`${data.name} is already in contacts.`)
+      : this.setState(prevState => ({
+          contacts: [newContact, ...prevState.contacts],
+        }));
   };
 
   changeFilter = e => {
@@ -35,6 +40,12 @@ export class App extends Component {
     );
   };
 
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
     const { filter } = this.state;
 
@@ -45,7 +56,10 @@ export class App extends Component {
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
-        <ContactList contactList={this.getVisibleContacts()} />
+        <ContactList
+          contactList={this.getVisibleContacts()}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
