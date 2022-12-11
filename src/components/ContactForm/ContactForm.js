@@ -41,7 +41,7 @@ export class ContactForm extends Component {
           />
         </label>
         <label>
-          Nunber
+          Number
           <input
             type="tel"
             name="number"
