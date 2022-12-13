@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
+import { ContactForm } from '../ContactForm/ContactForm';
+import { ContactList } from '../ContactList/ContactList';
+import { Filter } from '../Filter/Filter';
+import { GlobalStyle } from './GlobalStyles';
+import { ContactsWrapper, Title, Wrapper } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -50,17 +52,22 @@ export class App extends Component {
     const { filter } = this.state;
 
     return (
-      <div>
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.formSubmitHandler} />
+      <>
+        <Wrapper>
+          <Title>Phonebook</Title>
+          <ContactForm onSubmit={this.formSubmitHandler} />
 
-        <h2>Contacts</h2>
-        <Filter value={filter} onChange={this.changeFilter} />
-        <ContactList
-          contactList={this.getVisibleContacts()}
-          onDeleteContact={this.deleteContact}
-        />
-      </div>
+          <ContactsWrapper>
+            <h2>Contacts</h2>
+            <Filter value={filter} onChange={this.changeFilter} />
+            <ContactList
+              contactList={this.getVisibleContacts()}
+              onDeleteContact={this.deleteContact}
+            />
+          </ContactsWrapper>
+        </Wrapper>
+        <GlobalStyle />
+      </>
     );
   }
 }
